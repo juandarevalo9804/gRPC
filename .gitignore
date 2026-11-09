@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.py[cod]
+server/data/
+server/generated/*_pb2.py
+server/generated/*_pb2_grpc.py
+client/node_modules/

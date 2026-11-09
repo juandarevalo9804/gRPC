@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package rubi;
+
+service NodoRubi {
+  rpc ConsultarCamas (ConsultaRequest) returns (ListaCamas);
+  rpc ReservarCama (ReservaRequest) returns (ReservaResponse);
+  rpc PedirBloqueo (BloqueoRequest) returns (BloqueoResponse);
+  rpc ConfirmarReserva (ConfirmarRequest) returns (ConfirmarResponse);
+  rpc LiberarBloqueo (LiberarRequest) returns (LiberarResponse);
+  rpc ReplicarCambio (CambioRequest) returns (CambioResponse);
+  rpc Sincronizar (SyncRequest) returns (ListaCamas);
+}
+
+message Cama {
+  string id = 1;
+  string hospital = 2;
+  string tipo = 3;
+  string estado = 4;
+  int64 version = 5;
+}
+
+message ConsultaRequest { string hospital = 1; }
+message ListaCamas { repeated Cama camas = 1; }
+
+message ReservaRequest {
+  string cama_id = 1;
+  string request_id = 2;
+}
+message ReservaResponse {
+  bool exito = 1;
+  string mensaje = 2;
+  Cama cama = 3;
+}
+
+message BloqueoRequest {
+  string cama_id = 1;
+  string request_id = 2;
+  string coordinador_id = 3;
+  int64 lease_ms = 4;
+}
+message BloqueoResponse {
+  bool concedido = 1;
+  string mensaje = 2;
+}
+
+message ConfirmarRequest {
+  string cama_id = 1;
+  string request_id = 2;
+  int64 version = 3;
+}
+message ConfirmarResponse { bool confirmado = 1; }
+
+message LiberarRequest {
+  string cama_id = 1;
+  string request_id = 2;
+}
+message LiberarResponse { bool liberado = 1; }
+
+message CambioRequest { Cama cama = 1; }
+message CambioResponse { bool aplicado = 1; }
+message SyncRequest { map<string, int64> versions = 1; }

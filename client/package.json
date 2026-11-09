@@ -1,0 +1,17 @@
+{
+  "name": "mini-rubi-client",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cliente de consola Node.js para Mini-RUBI por gRPC",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.13.4",
+    "@grpc/proto-loader": "^0.7.13"
+  }
+}
